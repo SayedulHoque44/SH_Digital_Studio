@@ -1,0 +1,32 @@
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(360deg);
+  }
+  50% {
+    transform: rotate(360deg);
+  }
+  80% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.spin {
+  background: linear-gradient(
+    0deg,
+    rgba(15, 192, 131, 1) 50% /* transparent 100% */,
+    rgba(15, 192, 131, 1) 50%
+  );
+  animation: spin 5s linear infinite;
+  /* box-shadow: 0 0 10px rgba(15, 192, 131, 1), 0 0 40px rgba(15, 192, 131, 1),
+      0 0 80px rgba(15, 192, 131, 1); */
+}
+.shadow_animate {
+  /* box-shadow: 1px 1px 10px rgba(15, 192, 131, 1),
+      1px 1px 30px rgba(15, 192, 131, 1), 1px 1px 50px rgba(15, 192, 131, 1); */
+}

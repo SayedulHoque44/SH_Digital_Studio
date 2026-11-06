@@ -1,0 +1,10 @@
+node_modules
+dist
+.github
+.vercel
+
+# Environment files hold secrets (database URI, JWT secret, AWS keys).
+# Only the placeholder template .env.example is meant to be committed.
+.env
+.env.*
+!.env.example

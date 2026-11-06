@@ -1,0 +1,443 @@
+[
+  {
+    "slug": "aurum-menu",
+    "url": "https://aurum-menu-web.vercel.app/",
+    "pageHeight": 18833,
+    "files": [
+      {
+        "file": "desktop-1.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 76
+      },
+      {
+        "file": "desktop-2.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 47
+      },
+      {
+        "file": "desktop-3.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 40
+      },
+      {
+        "file": "fullpage.webp",
+        "width": 1200,
+        "height": 7500,
+        "kb": 347
+      },
+      {
+        "file": "tablet-1.webp",
+        "width": 834,
+        "height": 1194,
+        "kb": 51
+      },
+      {
+        "file": "mobile-1.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 64
+      },
+      {
+        "file": "mobile-2.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 122
+      }
+    ]
+  },
+  {
+    "slug": "fast-food-qsr",
+    "url": "https://fast-food-qsr.vercel.app/",
+    "pageHeight": 22908,
+    "files": [
+      {
+        "file": "desktop-1.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 99
+      },
+      {
+        "file": "desktop-2.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 112
+      },
+      {
+        "file": "desktop-3.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 104
+      },
+      {
+        "file": "fullpage.webp",
+        "width": 1200,
+        "height": 7500,
+        "kb": 464
+      },
+      {
+        "file": "tablet-1.webp",
+        "width": 834,
+        "height": 1194,
+        "kb": 78
+      },
+      {
+        "file": "mobile-1.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 94
+      },
+      {
+        "file": "mobile-2.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 85
+      }
+    ]
+  },
+  {
+    "slug": "crumb-and-kettle",
+    "url": "https://crumbandkettle.vercel.app/",
+    "pageHeight": 24033,
+    "files": [
+      {
+        "file": "desktop-1.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 74
+      },
+      {
+        "file": "desktop-2.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 81
+      },
+      {
+        "file": "desktop-3.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 62
+      },
+      {
+        "file": "fullpage.webp",
+        "width": 1200,
+        "height": 7500,
+        "kb": 346
+      },
+      {
+        "file": "tablet-1.webp",
+        "width": 834,
+        "height": 1194,
+        "kb": 58
+      },
+      {
+        "file": "mobile-1.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 66
+      },
+      {
+        "file": "mobile-2.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 73
+      }
+    ]
+  },
+  {
+    "slug": "fizzaria-and-italian",
+    "url": "https://fizzaria-and-italian.vercel.app/",
+    "pageHeight": 26791,
+    "files": [
+      {
+        "file": "desktop-1.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 128
+      },
+      {
+        "file": "desktop-2.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 79
+      },
+      {
+        "file": "desktop-3.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 77
+      },
+      {
+        "file": "fullpage.webp",
+        "width": 1200,
+        "height": 7500,
+        "kb": 396
+      },
+      {
+        "file": "tablet-1.webp",
+        "width": 834,
+        "height": 1194,
+        "kb": 85
+      },
+      {
+        "file": "mobile-1.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 96
+      },
+      {
+        "file": "mobile-2.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 93
+      }
+    ]
+  },
+  {
+    "slug": "vesper-flame",
+    "url": "https://vesper-flame.vercel.app/",
+    "pageHeight": 32088,
+    "files": [
+      {
+        "file": "desktop-1.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 38
+      },
+      {
+        "file": "desktop-2.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 46
+      },
+      {
+        "file": "desktop-3.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 29
+      },
+      {
+        "file": "fullpage.webp",
+        "width": 1200,
+        "height": 7500,
+        "kb": 151
+      },
+      {
+        "file": "tablet-1.webp",
+        "width": 834,
+        "height": 1194,
+        "kb": 29
+      },
+      {
+        "file": "mobile-1.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 36
+      },
+      {
+        "file": "mobile-2.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 83
+      }
+    ]
+  },
+  {
+    "slug": "smoke-and-bao",
+    "url": "https://smoke-and-bao.vercel.app/",
+    "pageHeight": 17880,
+    "files": [
+      {
+        "file": "desktop-1.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 62
+      },
+      {
+        "file": "desktop-2.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 61
+      },
+      {
+        "file": "desktop-3.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 45
+      },
+      {
+        "file": "fullpage.webp",
+        "width": 1200,
+        "height": 7500,
+        "kb": 357
+      },
+      {
+        "file": "tablet-1.webp",
+        "width": 834,
+        "height": 1194,
+        "kb": 46
+      },
+      {
+        "file": "mobile-1.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 62
+      },
+      {
+        "file": "mobile-2.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 71
+      }
+    ]
+  },
+  {
+    "slug": "family-grill-and-bbq",
+    "url": "https://casual-dining-and-family-grill.vercel.app/",
+    "pageHeight": 28265,
+    "files": [
+      {
+        "file": "desktop-1.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 116
+      },
+      {
+        "file": "desktop-2.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 174
+      },
+      {
+        "file": "desktop-3.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 135
+      },
+      {
+        "file": "fullpage.webp",
+        "width": 1200,
+        "height": 7500,
+        "kb": 286
+      },
+      {
+        "file": "tablet-1.webp",
+        "width": 834,
+        "height": 1194,
+        "kb": 76
+      },
+      {
+        "file": "mobile-1.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 92
+      },
+      {
+        "file": "mobile-2.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 76
+      }
+    ]
+  },
+  {
+    "slug": "orbit-bowl-bar",
+    "url": "https://orbit-bowl-bar.vercel.app/",
+    "pageHeight": 22248,
+    "files": [
+      {
+        "file": "desktop-1.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 31
+      },
+      {
+        "file": "desktop-2.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 56
+      },
+      {
+        "file": "desktop-3.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 60
+      },
+      {
+        "file": "fullpage.webp",
+        "width": 1200,
+        "height": 7500,
+        "kb": 301
+      },
+      {
+        "file": "tablet-1.webp",
+        "width": 834,
+        "height": 1194,
+        "kb": 49
+      },
+      {
+        "file": "mobile-1.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 52
+      },
+      {
+        "file": "mobile-2.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 78
+      }
+    ]
+  },
+  {
+    "slug": "ristorante-luva-tardiva",
+    "url": "https://ristorante-l-uva-tardiva.vercel.app/",
+    "pageHeight": 16631,
+    "files": [
+      {
+        "file": "desktop-1.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 88
+      },
+      {
+        "file": "desktop-2.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 55
+      },
+      {
+        "file": "desktop-3.webp",
+        "width": 1440,
+        "height": 900,
+        "kb": 47
+      },
+      {
+        "file": "fullpage.webp",
+        "width": 1200,
+        "height": 7500,
+        "kb": 291
+      },
+      {
+        "file": "tablet-1.webp",
+        "width": 834,
+        "height": 1194,
+        "kb": 46
+      },
+      {
+        "file": "mobile-1.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 64
+      },
+      {
+        "file": "mobile-2.webp",
+        "width": 780,
+        "height": 1688,
+        "kb": 47
+      }
+    ]
+  }
+]

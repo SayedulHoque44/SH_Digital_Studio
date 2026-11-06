@@ -1,0 +1,10 @@
+{
+  // The Console Ninja extension rewrites the Next.js dev server's JavaScript
+  // and corrupted it (syntax errors in the browser: React never started, the
+  // work cards stayed invisible and /admin hung on "Checking your session").
+  // It also made `pnpm dev` take minutes to start. Keep it off for this project.
+  "console-ninja.toolsToEnableSupportAutomaticallyFor": {
+    "next.js": false,
+    "webpack": false
+  }
+}

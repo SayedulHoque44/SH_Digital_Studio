@@ -1,0 +1,41 @@
+You are working on SH Digital Studio: an agency website + admin CMS (Client/, Next.js 16, React 19, Tailwind v4, antd 6 admin-only) and a REST API (Server/, Express 4, Mongoose 8, MongoDB Atlas, Zod).
+
+BEFORE EVERY TASK — load only the context you need. The user will not name docs; decide from the task. Read each doc once per chat (it stays in context).
+ALWAYS read: docs/06_Plan.md (current state, open steps).
+THEN, by what the task touches:
+- New feature / "should we build X?" -> docs/01_PRD.md (check Non-Goals first)
+- Pages, routes, navigation, buttons, forms, loading/empty/error states -> docs/02_AppFlow.md
+- Styling, layout, colors, fonts, spacing, animation, components -> docs/03_UI_Spec.md
+- Dependencies, folders, API endpoints, env vars, security, deploy, commands -> docs/04_TRD.md
+- Data fields, models, queries, indexes, login/sessions/permissions -> docs/05_Schema.md
+- Tiny edit (typo, copy, one-line fix) -> nothing else; open the file directly
+Mixed task: read every matching doc. Unsure where code lives: docs/04_TRD.md section 3.
+Docs are the source of truth; if code and docs disagree, stop and report it.
+Save tokens: go straight to the files the docs point to; don't scan the whole repo.
+When the user switches to an unrelated topic or the chat is long, suggest starting a new chat.
+
+AFTER EVERY COMPLETED TASK (automatic):
+- Run the relevant quality gates from docs/04_TRD.md section 8.
+- Update docs/06_Plan.md: tick the matching step (or add a new ticked step) and one dated Changelog line; add newly found work as unchecked steps.
+- If routes, screens, tokens, dependencies, schema or security behavior changed, update the matching doc (02-05) briefly. Tiny edits need no doc update.
+
+HARD RULES:
+- Never print, log, commit or copy secrets from .env files. Example env files contain placeholders only. No secrets in NEXT_PUBLIC_*.
+- Never invent clients, testimonials, metrics, prices, availability, awards or screenshots.
+- Stack is locked: no new dependencies/UI kits/state or animation libraries without updating docs/04_TRD.md first.
+- Zod-validate every API route; public responses only via Server/src/app/modules/Public/public.mappers.ts; no admin registration endpoint; never expose drafts, internalNotes, disabled demo credentials, notificationEmail.
+- Database agency_portfolio for the app, agency_portfolio_test for tests only; never touch patenteDB; seeds stay idempotent ($setOnInsert).
+- Server modules: model -> interface -> validation -> service -> controller -> routes (register in src/app/routes/index.ts).
+- Admin editors submit form.getFieldsValue(true) (keeps list _id) and call revalidateSite() after content mutations.
+- Do not add loading.tsx above slug routes (it turns 404/308 into soft 200s).
+- Use design tokens (no raw hex in components), respect prefers-reduced-motion, every page works at 390px without horizontal scroll.
+- Ask before destructive actions.
+
+COMMANDS:
+API dev: cd Server && npm run dev (port 3001) | Site dev: cd Client && pnpm dev (port 3000)
+Types: cd Client && pnpm exec tsc --noEmit ; cd Server && npm run typecheck
+Lint: cd Client && pnpm exec eslint . ; cd Server && npm run lint
+API tests: cd Server && npm run test:api | Build: cd Client && pnpm build
+Seed: cd Server && npm run seed ; npm run seed:admin (env ADMIN_EMAIL, ADMIN_NAME, ADMIN_PASSWORD)
+
+ENVIRONMENT: Windows + VS Code. Keep the Console Ninja extension disabled for this workspace (.vscode/settings.json) — it corrupts Next dev bundles.
