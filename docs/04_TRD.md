@@ -28,7 +28,7 @@
 ### Server — `Server/` (package manager: **npm**)
 | Concern | Library | Version |
 | --- | --- | --- |
-| Runtime | Node.js | ≥ 20 (`engines`) |
+| Runtime | Node.js | 22.x pinned (`engines`) — Node 25+ removed `SlowBuffer`, which crashes `jsonwebtoken` → `buffer-equal-constant-time` |
 | HTTP | Express | 4.18.2 |
 | Language | TypeScript (CommonJS output to `dist/`) | 5.3.3 |
 | Database | MongoDB Atlas via Mongoose | 8.0.3 |
@@ -94,7 +94,7 @@ My_Agency/
    │  ├─ app/{error,utils,builder,interface}/   middlewares/ (auth, validateRequest, verifyOrigin, requireDb, requestLogger, globalErrorHandler, notFoundHandler, RateLimiter/)
    │  └─ scripts/ (seed.ts, createAdmin.ts, seedData/)
    ├─ tests/api.test.mjs
-   └─ vercel.json (serves dist/server.js)
+   └─ vercel.json (serves dist/server.js; deploy with `npm run deploy` = build + `vercel --prod`, since Vercel uploads the local `dist/`)
 ```
 
 Module pattern (mandatory for new server features): `*.model.ts` → `*.interface.ts` → `*.validation.ts` (Zod `{ body, query, params }`) → `*.service.ts` (DB logic) → `*.controller.ts` (`catchAsync` + `sendResponse`) → `*.routes.ts` (register in `app/routes/index.ts`).

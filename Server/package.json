@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node ./dist/server.js",
+    "deploy": "npm run build && vercel --prod",
     "dev": "tsnd --respawn ./src/server.ts",
     "typecheck": "tsc --noEmit",
     "seed": "npm run build && node ./dist/scripts/seed.js",
@@ -20,7 +21,7 @@
   "author": "",
   "license": "ISC",
   "engines": {
-    "node": ">=20"
+    "node": "22.x"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.810.0",

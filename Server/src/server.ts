@@ -4,7 +4,12 @@ import config from "./app/config";
 import { connectDatabase, disconnectDatabase } from "./app/config/db";
 import { logger } from "./app/utils/logger";
 
-let server: Server;
+// On Vercel the function runtime calls the exported app per request; it must
+// not open its own port or call process.exit. The DB connects lazily through
+// middlewares/requireDb (shared promise, reused across warm invocations).
+const isServerless = Boolean(process.env.VERCEL);
+
+let server: Server | undefined;
 
 async function main() {
   // Start accepting requests immediately. If the database is not reachable
@@ -24,8 +29,6 @@ async function main() {
   }
 }
 
-main();
-
 const shutdown = (signal: string) => {
   logger.info(`${signal} received, closing server`);
   server?.close(async () => {
@@ -36,8 +39,11 @@ const shutdown = (signal: string) => {
   setTimeout(() => process.exit(1), 10000).unref();
 };
 
-process.on("SIGTERM", () => shutdown("SIGTERM"));
-process.on("SIGINT", () => shutdown("SIGINT"));
+if (!isServerless) {
+  main();
+  process.on("SIGTERM", () => shutdown("SIGTERM"));
+  process.on("SIGINT", () => shutdown("SIGINT"));
+}
 
 // Log unexpected errors with context; keep serving other requests.
 process.on("unhandledRejection", err => {
@@ -47,3 +53,5 @@ process.on("unhandledRejection", err => {
 process.on("uncaughtException", err => {
   logger.error("Uncaught exception", { error: err?.message, stack: err?.stack });
 });
+
+export default app;

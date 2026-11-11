@@ -74,6 +74,8 @@ Legend: `[x]` done · `[ ]` to do · 👤 owner action
 - [ ] 4.13 Delete the temporary test admin `qa-admin@example.com` (no API endpoint by design — targeted DB delete by exact email)
 - [ ] 4.14 Rename client package `ebp_next_client` → `sh-digital-studio-client` (cosmetic)
 - [ ] 4.15 Optional: Tailwind v4 canonical class cleanup (`!mb-5` → `mb-5!` etc.) — no behavior change
+- [x] 4.15a Fix Vercel API crash (500 FUNCTION_INVOCATION_FAILED): pin Node 22.x, `server.ts` exports app and skips `listen` on Vercel, `npm run deploy` script
+- [ ] 4.15b 👤 Redeploy the API with `cd Server && npm run deploy`; check `/api/health`
 
 ### 4C. Launch (owner)
 - [ ] 4.16 👤 Rotate MongoDB password, JWT secret and both AWS key pairs (old `.gitignore` did not exclude `.env`)
@@ -92,3 +94,4 @@ Legend: `[x]` done · `[ ]` to do · 👤 owner action
 - 2026-10-29 — `docs/` context architecture (01–06), `CLAUDE.md`, `.cursorrules` created.
 - 2026-10-30 — Client tracker (Clients) added; PRD A10 + Non-Goals 3/9 clarified; admin-only alerts (no e-mail, per owner). Monthly budget ledger + money stats; API tests 37/37.
 - 2026-10-31 — Client project Settings tab, mute alerts, type-to-confirm delete. Collapsible accounts, encrypted Env tab, Yes/No on every delete; API tests 38/38.
+- 2026-11-11 — Vercel API crash fixed (Node 22.x pin; serverless-safe `server.ts`; `npm run deploy`).
