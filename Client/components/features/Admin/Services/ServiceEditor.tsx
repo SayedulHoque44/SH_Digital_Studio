@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, Button, Card, Form, Input, Popconfirm, Result, Segmented, Select, Skeleton, Tabs } from "antd";
+import { Alert, Button, Card, Form, Input, Popconfirm, Result, Segmented, Select, Tabs } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -11,6 +11,7 @@ import { PROJECT_TYPE_LABELS } from "@/lib/format";
 import { CtaFields, FaqListField, FeatureListField, IconSelect, MarkdownField, OrderedSelect, SeoFields, SlugInput, StringListField } from "../fields/FormFields";
 import { MediaField } from "../fields/MediaField";
 import PageHeader from "../PageHeader";
+import { EditorSkeleton } from "../Skeletons";
 import { useUnsavedChanges } from "../UnsavedChanges";
 
 const toForm = (service?: IAdminService) =>
@@ -73,7 +74,15 @@ export default function ServiceEditor({ id }: { id?: string }) {
   return (
     <Form form={form} layout="vertical" requiredMark="optional" onFinish={onFinish} onValuesChange={() => setDirty(true)} scrollToFirstError>
       {loading ? (
-        <Skeleton active paragraph={{ rows: 12 }} />
+        <EditorSkeleton
+          label="Loading service…"
+          tabs={6}
+          eyebrow={
+            <button type="button" onClick={() => navigate("/admin/services")} className="inline-flex items-center gap-1.5 hover:underline">
+              <LuArrowLeft aria-hidden /> Services
+            </button>
+          }
+        />
       ) : missing ? (
         <Result status="404" title="Service not found" extra={<Link href="/admin/services">Back to services</Link>} />
       ) : (

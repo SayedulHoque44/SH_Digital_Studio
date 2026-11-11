@@ -3,7 +3,7 @@ import cors from "cors";
 import express, { Request, Response } from "express";
 import helmet from "helmet";
 import config from "./app/config";
-import { isDatabaseConnected } from "./app/config/db";
+import { connectDatabase, isDatabaseConnected } from "./app/config/db";
 import "./app/interface/express";
 import router from "./app/routes";
 import globalErrorHandler from "./middlewares/globalErrorHandler";
@@ -53,8 +53,10 @@ app.use("/api", (req, res, next) => {
   next();
 });
 
-// Health check - reports database state without exposing any details
-app.get("/api/health", (req: Request, res: Response) => {
+// Health check - reports database state without exposing any details.
+// Tries to connect first: on a serverless cold start nothing has connected yet.
+app.get("/api/health", async (req: Request, res: Response) => {
+  await connectDatabase().catch(() => undefined);
   res.status(isDatabaseConnected() ? 200 : 503).json({
     success: isDatabaseConnected(),
     status: isDatabaseConnected() ? "ok" : "degraded",

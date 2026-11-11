@@ -1,6 +1,6 @@
 "use client";
 
-import { App, Button, Drawer, Empty, Form, Input, Pagination, Segmented, Select, Skeleton, Space, Tag } from "antd";
+import { App, Button, Drawer, Empty, Form, Input, Pagination, Segmented, Select, Space, Tag } from "antd";
 import { useEffect, useState } from "react";
 import { LuCopy, LuPlus, LuSave, LuSearch, LuTrash2 } from "react-icons/lu";
 import AdminApis from "@/features/Admin/apis/admin.api";
@@ -11,6 +11,7 @@ import { errorToast, successToast } from "@/utils/toast";
 import MediaPickerModal from "../fields/MediaPickerModal";
 import { formatBytes } from "../fields/mediaUtils";
 import PageHeader from "../PageHeader";
+import { MediaGridSkeleton } from "../Skeletons";
 
 function MediaDetails({ asset, onClose }: { asset: IMediaAsset | null; onClose: () => void }) {
   const [form] = Form.useForm();
@@ -155,8 +156,9 @@ export default function MediaLibrary() {
         />
       </div>
 
-      {media.isLoading ? (
-        <Skeleton active />
+      {/* Until this page/search has data; cached results refresh silently */}
+      {media.isLoading || media.isPreviousData ? (
+        <MediaGridSkeleton />
       ) : items.length ? (
         <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6">
           {items.map((asset) => (

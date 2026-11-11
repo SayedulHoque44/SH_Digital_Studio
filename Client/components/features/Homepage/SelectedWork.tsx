@@ -6,7 +6,7 @@ import Container from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/Section";
 import { cn } from "@/lib/utils";
 import type { IHomeData } from "@/features/Public/interface/public.interface";
-import { HERO_OVERLAP } from "./Hero";
+import { HERO_OVERLAP } from "./heroLayout";
 
 // Editorial rhythm for the grid: wide/narrow pairs, then an even row.
 const SPANS = ["lg:col-span-7", "lg:col-span-5", "lg:col-span-5", "lg:col-span-7", "lg:col-span-6", "lg:col-span-6"];

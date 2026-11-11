@@ -10,6 +10,7 @@ import type { IAdminProject } from "@/features/Admin/interface/admin.interface";
 import { PROJECT_STATUS_LABELS, PROJECT_TYPE_LABELS } from "@/lib/format";
 import PageHeader from "../PageHeader";
 import ReorderModal from "../ReorderModal";
+import { SkeletonCell, skeletonColumns, skeletonRows } from "../Skeletons";
 
 const STATUS_COLOR: Record<string, string> = { published: "green", draft: "orange", archived: "default" };
 
@@ -140,6 +141,17 @@ export default function ProjectsTable() {
     [],
   );
 
+  // Skeleton rows until this page/filter has data; cached data refreshes silently
+  const skeleton = projects.isLoading || projects.isPreviousData;
+  const skeletonCols = skeletonColumns(columns, {
+    title: SkeletonCell.media(),
+    projectType: SkeletonCell.lines("60%", "45%"),
+    publishStatus: SkeletonCell.tag(),
+    featured: SkeletonCell.toggle(),
+    updatedAt: SkeletonCell.line("4.5rem"),
+    actions: SkeletonCell.actions(2),
+  });
+
   return (
     <>
       <PageHeader
@@ -205,12 +217,12 @@ export default function ProjectsTable() {
 
       <Table
         rowKey="_id"
-        columns={columns}
-        dataSource={projects.data?.result || []}
-        loading={projects.isFetching}
+        columns={skeleton ? skeletonCols : columns}
+        dataSource={skeleton ? skeletonRows<IAdminProject>(8) : projects.data?.result || []}
+        loading={!skeleton && projects.isFetching && projects.isFetchedAfterMount}
         scroll={{ x: 720 }}
         locale={{ emptyText: "No projects match these filters" }}
-        pagination={{
+        pagination={!projects.data ? false : {
           current: Number(query.page),
           pageSize: Number(query.limit),
           total: projects.data?.meta.total,

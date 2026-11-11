@@ -1,14 +1,16 @@
 "use client";
 
-import { Alert, Button, Card, Form, Input, Select, Skeleton, Switch, Tabs } from "antd";
+import { Alert, Button, Card, Form, Input, Select, Switch, Tabs } from "antd";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { LuExternalLink, LuPlus, LuSave, LuTrash2 } from "react-icons/lu";
+import { SkeletonStatus } from "@/components/ui/Skeleton";
 import AdminHooks from "@/features/Admin/hooks/admin.hooks";
 import { FeatureListField, MarkdownField, OrderedSelect, SeoFields, StringListField } from "../fields/FormFields";
 import LinesInput from "../fields/LinesInput";
 import { MediaField } from "../fields/MediaField";
 import PageHeader from "../PageHeader";
+import { TabsCardSkeleton } from "../Skeletons";
 import ContactSocialForm from "../Settings/ContactSocialForm";
 import { useUnsavedChanges } from "../UnsavedChanges";
 import ConfirmDelete from "../fields/ConfirmDelete";
@@ -74,14 +76,18 @@ export default function ProfileEditor() {
             <Button icon={<LuExternalLink aria-hidden />} href="/about" target="_blank">
               View page
             </Button>
-            <Button type="primary" onClick={() => form.submit()} loading={update.isLoading} icon={<LuSave aria-hidden />}>
+            {/* Disabled until loaded: saving an empty form would clear the photo, experience and testimonials */}
+            <Button type="primary" onClick={() => form.submit()} loading={update.isLoading} disabled={profile.isLoading} icon={<LuSave aria-hidden />}>
               Save profile
             </Button>
           </>
         }
       />
       {profile.isLoading ? (
-        <Skeleton active paragraph={{ rows: 12 }} />
+        <>
+          <SkeletonStatus label="Loading profile…" />
+          <TabsCardSkeleton tabs={6} />
+        </>
       ) : (
         <Card>
           <Tabs

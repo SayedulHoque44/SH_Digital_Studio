@@ -3,6 +3,7 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from "@sentry/nextjs";
+import { announceNavigationStart, type TNavigationType } from "@/lib/navigationEvents";
 
 Sentry.init({
   // ============================================
@@ -43,4 +44,10 @@ Sentry.init({
   beforeSend: () => null,
 });
 
-export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;
+// Called by Next.js when a client-side navigation starts. Besides Sentry's
+// router instrumentation it announces the destination, so the page skeleton
+// for that route can show while it loads (see lib/navigationEvents.ts).
+export function onRouterTransitionStart(url: string, navigationType: TNavigationType) {
+  announceNavigationStart(url, navigationType);
+  Sentry.captureRouterTransitionStart(url, navigationType);
+}

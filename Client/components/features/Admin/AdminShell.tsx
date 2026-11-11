@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge, Button, Drawer, Dropdown, Grid, Layout, Menu, Result, Spin } from "antd";
+import { Badge, Button, Drawer, Dropdown, Grid, Layout, Menu, Result } from "antd";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useMemo, useState } from "react";
@@ -22,6 +22,7 @@ import {
 import { Logo } from "@/components/brand/Logo";
 import AdminHooks from "@/features/Admin/hooks/admin.hooks";
 import { errorToast } from "@/utils/toast";
+import { AdminShellSkeleton } from "./Skeletons";
 import { UnsavedChangesProvider, useUnsavedChanges } from "./UnsavedChanges";
 
 const { Sider, Header, Content } = Layout;
@@ -98,15 +99,8 @@ function ShellInner({ children }: { children: React.ReactNode }) {
     }
   };
 
-  if (me.isLoading) {
-    return (
-      <div className="flex min-h-dvh items-center justify-center bg-paper-100">
-        <Spin size="large" description="Checking your session…">
-          <div className="p-12" />
-        </Spin>
-      </div>
-    );
-  }
+  // The whole shell (and the current screen) as a skeleton while the session is checked
+  if (me.isLoading) return <AdminShellSkeleton pathname={pathname} />;
 
   if (me.isError || !me.data) {
     // 401 is redirected to the login page by the API client; anything else

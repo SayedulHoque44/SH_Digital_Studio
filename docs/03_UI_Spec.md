@@ -143,6 +143,9 @@ Labels are always visible (no placeholder-only labels). Optional fields marked "
 ### Cards
 Project card: 16:10 screenshot (top-aligned), "Concept demo"/status badge, "Live demo" chip (external), eyebrow (industry), title, 2-line summary, arrow button. Hover: image scale 1.035 (1.4s ease-out-expo) + arrow nudge. Whole card is one link target plus the separate live-demo link.
 
+### Skeleton (`components/ui/Skeleton.tsx`)
+`Skeleton` (block), `SkeletonText` (lines sized by the real text class via `1lh`), `SkeletonInline`, `SkeletonStatus`/`SkeletonScreen` (one sr-only "Loading…"; blocks aria-hidden). Shimmer = transform only, off for reduced motion. Colours from `--skeleton-bg`/`--skeleton-shine` (switched by `.surface-dark`; `.surface-light` restores light on a dark parent). Page skeletons copy the real layout: `components/features/Skeletons/`; admin: `components/features/Admin/Skeletons.tsx`.
+
 ### Badge, Section, SectionHeading, PageHero, Breadcrumbs, FaqList (accordion with FAQPage JSON-LD), ShareActions, CopyButton (announces "Copied" via live region), DeviceFrames, Lightbox (Esc closes, focus trapped), SmartImage (`next/image` wrapper with placeholder), EmptyState, MediaPlaceholder.
 
 ### Admin (antd 6)

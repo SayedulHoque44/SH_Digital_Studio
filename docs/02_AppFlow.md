@@ -59,6 +59,7 @@
 `SiteHeader` (fixed pill nav, hides on scroll-down, reappears on scroll-up; mobile menu closes on navigation) → optional announcement bar → page → closing CTA band (from settings, hidden when `sections.finalCta = false`) → `SiteFooter` (services/industries lists, contact, social).
 
 - Skip link "Skip to content" is the first focusable element.
+- Page skeletons: on client-side navigation the destination page's skeleton covers the page under the header (after 120 ms, min 300 ms) until it renders — `components/layouts/Site/NavigationSkeleton.tsx`, fed by `onRouterTransitionStart` in `instrumentation-client.ts`. No public `loading.tsx` (status codes + no-JS stay intact).
 - Scroll-reveal: elements with `data-reveal` fade in when ≥1 px is on screen. Failsafe: if client JS hasn't started within 6 s, the `js` class is removed and all content shows. `prefers-reduced-motion` disables motion.
 
 ## 3. Public screens — actions & states
@@ -84,7 +85,7 @@ Empty: a section with no items renders nothing (no empty headings).
 | Filtered | Type tabs (with counts), industry select, search, sort; "Apply" submits GET form (works without JS) |
 | No results | Empty state with "Clear filters" → `/work` |
 | Pagination | `?page=N` links |
-| Loading (client nav) | `app/(site)/work/loading.tsx` slim progress bar |
+| Loading | Entering `/work`: page skeleton. Filter/search change: card-grid skeleton; "Show more": 3 extra card skeletons (`WorkResults.tsx`) — page and search box stay |
 
 ### `/demos/[slug]`
 Actions: **Copy link**, **Share** (native share sheet, only when supported), **Email** (`mailto:` with the category's e-mail intro), WhatsApp CTA (if configured), "Request a similar website" → `/contact?industry=<slug>`.
@@ -126,7 +127,7 @@ Rules: consent checkbox required; phone required when preferred contact is Whats
 ### Session gate (`AdminShell`)
 ```
 visit /admin/* ──▶ GET /admin/auth/me
-   loading ─────▶ full-screen spinner "Checking your session…"
+   loading ─────▶ skeleton of the whole shell + current screen (sr: "Checking your session…")
    200 ─────────▶ render shell (sidebar, header, page)
    401 ─────────▶ redirect /admin/login?next=<path>
    other error ─▶ "The admin API is not reachable" + [Try again] (refetch)
@@ -148,7 +149,7 @@ Sidebar (desktop ≥ lg) / drawer (mobile, closes on navigation): Dashboard, Pro
 ### Editors (project, service, category, profile, settings)
 | Step | Behavior |
 | --- | --- |
-| Load | Skeleton until data; missing id → 404 result "Project not found" + back link |
+| Load | Skeleton of the editor layout until data (Save disabled while loading); missing id → 404 result "Project not found" + back link |
 | Edit | Any change marks the page **dirty** |
 | Navigate away while dirty | Confirm dialog (in-app links) / browser `beforeunload` prompt |
 | Save | Client validation → scroll to first error. Submits the **full form store** (keeps list-item `_id`s). Success → toast, dirty cleared, admin queries invalidated, `POST /revalidate` |
@@ -171,6 +172,8 @@ Status chips with counts (All, New, Contacted, Qualified, Proposal sent, Won, Lo
 - **Money**: tiles (total credited = salary + funds + renewal payments, salary, funds, costs, renewal payments, balance after latest month; red when negative) with an All time / year filter — across all clients on the list page, per project in the editor.
 - **Monthly budget tab**: month table (newest first) + one collapsible card per month: month, BDT rate, carried over; money received (Fund / Salary); cost lines (name, category, amount, currency, usage, note); live totals (have − costs = remaining; salary shown separately). "Add <next month> (copy last month)" pre-fills rate, lines and carried over = last remaining.
 - **Record payment** modal: paid on (today), number of cycles, amount (default amount × cycles), BDT rate, note; previews "Covers X → Y". The new period starts at the old paid-until date. Warns first if the editor has unsaved changes.
+
+Admin lists/grids show skeleton rows/cards until data for the current filters arrives; cached data refreshes silently (table spinner only for refetches after an edit). All admin skeletons: `components/features/Admin/Skeletons.tsx`.
 
 Every delete/remove button in the admin asks Yes/No first (`fields/ConfirmDelete.tsx`, or a confirm modal for categories/media).
 

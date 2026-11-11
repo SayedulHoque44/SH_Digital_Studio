@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, Button, Card, Empty, Progress, Skeleton, Tag } from "antd";
+import { Alert, Button, Card, Empty, Progress, Tag } from "antd";
 import Link from "next/link";
 import { LuCircleCheck, LuCircle, LuPlus, LuInbox, LuExternalLink } from "react-icons/lu";
 import AdminHooks from "@/features/Admin/hooks/admin.hooks";
@@ -8,6 +8,7 @@ import { INQUIRY_STATUS_LABELS, type TInquiryStatus } from "@/features/Inquiry/i
 import { formatDate } from "@/lib/format";
 import { AttentionList } from "./Clients/RenewalParts";
 import PageHeader from "./PageHeader";
+import { DashboardBodySkeleton } from "./Skeletons";
 
 function Stat({ label, value, hint, href }: { label: string; value: number | string; hint?: string; href: string }) {
   return (
@@ -23,7 +24,32 @@ function Stat({ label, value, hint, href }: { label: string; value: number | str
 export default function Dashboard() {
   const { data, isLoading, isError, refetch } = AdminHooks.useDashboard();
 
-  if (isLoading) return <Skeleton active paragraph={{ rows: 10 }} />;
+  const header = (
+    <PageHeader
+      title="Dashboard"
+      description="An overview of your content and leads."
+      actions={
+        <>
+          <Link href="/admin/projects/new">
+            <Button type="primary" icon={<LuPlus aria-hidden />}>
+              New project
+            </Button>
+          </Link>
+          <a href="/" target="_blank" rel="noopener noreferrer">
+            <Button icon={<LuExternalLink aria-hidden />}>View website</Button>
+          </a>
+        </>
+      }
+    />
+  );
+
+  if (isLoading)
+    return (
+      <>
+        {header}
+        <DashboardBodySkeleton />
+      </>
+    );
   if (isError || !data)
     return (
       <Alert
@@ -39,22 +65,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <PageHeader
-        title="Dashboard"
-        description="An overview of your content and leads."
-        actions={
-          <>
-            <Link href="/admin/projects/new">
-              <Button type="primary" icon={<LuPlus aria-hidden />}>
-                New project
-              </Button>
-            </Link>
-            <a href="/" target="_blank" rel="noopener noreferrer">
-              <Button icon={<LuExternalLink aria-hidden />}>View website</Button>
-            </a>
-          </>
-        }
-      />
+      {header}
 
       {data.renewals.overdue + data.renewals.dueSoon > 0 && (
         <Alert

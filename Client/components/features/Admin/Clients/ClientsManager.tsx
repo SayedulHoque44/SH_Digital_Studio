@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, Button, Card, Empty, Input, Segmented, Skeleton, Tag } from "antd";
+import { Alert, Button, Card, Empty, Input, Segmented, Tag } from "antd";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { LuPin, LuPlus, LuSearch, LuShieldCheck } from "react-icons/lu";
@@ -19,6 +19,7 @@ import {
 import { cn } from "@/lib/utils";
 import { moneyStats } from "@/lib/ledger";
 import PageHeader from "../PageHeader";
+import { ClientsBodySkeleton } from "../Skeletons";
 import { MoneyTiles, YearFilter } from "./MoneyParts";
 import { AttentionList, STATE_ACCENT, StatePill, usePaymentModal } from "./RenewalParts";
 
@@ -182,7 +183,7 @@ export default function ClientsManager() {
       />
 
       {isLoading ? (
-        <Skeleton active paragraph={{ rows: 10 }} />
+        <ClientsBodySkeleton />
       ) : isError ? (
         <Alert type="error" showIcon title="Could not load client projects" action={<Button onClick={() => refetch()}>Retry</Button>} />
       ) : (

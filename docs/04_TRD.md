@@ -56,7 +56,7 @@ Browser ──► Next.js (Client, :3000)
 - **Rendering**: public pages are Server Components using `lib/server/api.ts` (`apiGet`, cached, tag `content`, `revalidate: 300`). 404 from API → `notFound()`; `{ redirectSlug }` → `permanentRedirect()`; API down → `ApiUnavailableError` → error boundary.
 - **Cache invalidation**: every admin save calls `POST /revalidate` → `revalidateTag("content", { expire: 0 })`.
 - **Admin**: client components + TanStack Query hooks (`features/Admin/hooks/admin.hooks.ts`) over axios (`lib/api.ts`, `baseURL: "/api"`).
-- **No `loading.tsx` above slug routes** (it turns `notFound()` into soft 200s). Only `app/(site)/work/loading.tsx` exists.
+- **No public `loading.tsx`** (it turns `notFound()`/308 into soft 200s and hides streamed content from no-JS visitors). Navigation skeletons are client-only: `onRouterTransitionStart` (`instrumentation-client.ts`) → `lib/navigationEvents.ts` → `NavigationSkeleton` (in `SiteShell`) / `WorkResults`.
 - Server-only internal key (`INTERNAL_API_KEY`) is sent by Next to the API for SSR and proxied requests (with `x-client-ip`).
 
 ## 3. Folder structure
@@ -79,7 +79,7 @@ My_Agency/
 │  │  ├─ brand/ (Logo)  ui/ (Button, ButtonLink, buttonStyles, Container, Section, Badge, PageHero)
 │  │  ├─ layouts/Site/ (SiteShell, SiteHeader, SiteFooter)
 │  │  ├─ shared/ (RevealObserver, ShareActions, CopyButton, Lightbox, FaqList, Breadcrumbs, JsonLd, Markdown, SmartImage, Icon, SocialIcon, DeviceFrames, …)
-│  │  └─ features/ (Homepage, Projects, Blocks, About, Contact, Errors, Legal, Admin/…)
+│  │  └─ features/ (Homepage, Projects, Blocks, About, Contact, Errors, Legal, Skeletons, Admin/…)
 │  ├─ features/<Domain>/ { apis/, hooks/, interface/ }   ← Public, Inquiry, Admin
 │  ├─ lib/ (api.ts, renewals.ts, seo.ts, site.ts, color.ts, format.ts, image.ts, whatsapp.ts, revalidate.ts, hooks/, server/{api,adminSession,og})
 │  ├─ providers/ (Providers, TanstackProvider)   utils/toast.ts
@@ -130,7 +130,7 @@ Module pattern (mandatory for new server features): `*.model.ts` → `*.interfac
 
 ## 6. Environment variables
 
-Client (`.env.local`): `NEXT_PUBLIC_SITE_URL`, `API_ORIGIN` (server-only), `INTERNAL_API_KEY` (server-only), `NEXT_PUBLIC_IMAGE_HOSTS`, `NEXT_PUBLIC_SENTRY_DSN`.
+Client (`.env.local`): `NEXT_PUBLIC_SITE_URL`, `API_ORIGIN` (server-only), `INTERNAL_API_KEY` (server-only), `NEXT_PUBLIC_IMAGE_HOSTS`, `NEXT_PUBLIC_SENTRY_DSN`. `pnpm build` prerenders from the API, so `API_ORIGIN` must reach a running API at build time (local `.env.production` and `.env.development` → deployed API, so `pnpm dev` needs no local Express and edits the LIVE data; set it in the Vercel client project too).
 Server (`.env`): `mongoDbUrl`, `JWT_ACCESS_SECRET` (legacy `JWT_ACCESS_SECRCT` accepted), `CLIENT_ORIGINS`, `INTERNAL_API_KEY`, `PORT`, `NODE_ENV`, `ADMIN_SESSION_EXPIRES_IN`, `TRUST_PROXY`, `COOKIE_SECURE`, `MONGODB_DB_NAME`, `DATA_ENCRYPTION_KEY` (encrypts client env values; back it up), S3 vars, SMTP vars, `ADMIN_*` (seed only).
 Templates: `Client/.env.example`, `Server/.env.example` (placeholders only).
 

@@ -14,7 +14,6 @@ import {
   Result,
   Segmented,
   Select,
-  Skeleton,
   Switch,
   Tabs,
   Tooltip,
@@ -41,6 +40,7 @@ import {
 import { cn } from "@/lib/utils";
 import { MarkdownField } from "../fields/FormFields";
 import PageHeader from "../PageHeader";
+import { EditorSkeleton } from "../Skeletons";
 import { useUnsavedChanges } from "../UnsavedChanges";
 import { moneyStats } from "@/lib/ledger";
 import { LedgerField, MoneyTiles, MonthlyTable, YearFilter } from "./MoneyParts";
@@ -317,7 +317,16 @@ export default function ClientProjectEditor({ id }: { id?: string }) {
     <>
     <Form form={form} layout="vertical" requiredMark="optional" onFinish={onFinish} onValuesChange={() => setDirty(true)} scrollToFirstError>
       {loading ? (
-        <Skeleton active paragraph={{ rows: 12 }} />
+        <EditorSkeleton
+          label="Loading client project…"
+          tabs={9}
+          tiles={2}
+          eyebrow={
+            <button type="button" onClick={() => navigate("/admin/clients")} className="inline-flex items-center gap-1.5 hover:underline">
+              <LuArrowLeft aria-hidden /> Clients
+            </button>
+          }
+        />
       ) : missing ? (
         <Result status="404" title="Client project not found" extra={<Link href="/admin/clients">Back to clients</Link>} />
       ) : (

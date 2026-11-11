@@ -1,11 +1,13 @@
 "use client";
 
-import { Button, Form, Input, Select, Skeleton } from "antd";
+import { Button, Form, Input, Select } from "antd";
 import { useEffect } from "react";
 import { LuPlus, LuSave, LuTrash2 } from "react-icons/lu";
 import { SOCIAL_PLATFORMS, socialLabel } from "@/components/shared/SocialIcon";
+import { SkeletonStatus } from "@/components/ui/Skeleton";
 import AdminHooks from "@/features/Admin/hooks/admin.hooks";
 import ConfirmDelete from "../fields/ConfirmDelete";
+import { FieldsSkeleton } from "../Skeletons";
 
 /**
  * Contact details and social profiles. Stored once in site settings and
@@ -21,7 +23,13 @@ export default function ContactSocialForm() {
     if (settings.data) form.setFieldsValue({ contact: settings.data.contact || {}, socialLinks: settings.data.socialLinks || [] });
   }, [settings.data, form]);
 
-  if (settings.isLoading) return <Skeleton active />;
+  if (settings.isLoading)
+    return (
+      <>
+        <SkeletonStatus label="Loading contact details…" />
+        <FieldsSkeleton fields={6} textarea={false} />
+      </>
+    );
 
   return (
     <Form form={form} layout="vertical" onFinish={() => update.mutate(form.getFieldsValue(true))}>

@@ -40,7 +40,8 @@ export function Section({
 }
 
 type THeadingProps = {
-  eyebrow?: string;
+  // Text, or a placeholder in skeletons (components/features/Skeletons)
+  eyebrow?: React.ReactNode;
   title: React.ReactNode;
   intro?: React.ReactNode;
   action?: React.ReactNode;

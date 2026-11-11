@@ -11,6 +11,7 @@ import type { IAdminCategory } from "@/features/Admin/interface/admin.interface"
 import { apiErrorMessage } from "@/lib/api";
 import { errorToast } from "@/utils/toast";
 import PageHeader from "../PageHeader";
+import { SkeletonCell, skeletonColumns, skeletonRows } from "../Skeletons";
 import ReorderModal from "../ReorderModal";
 import CategoryEditor from "./CategoryEditor";
 
@@ -22,6 +23,8 @@ export default function CategoryManager() {
   const [reorderOpen, setReorderOpen] = useState(false);
 
   const categories = AdminHooks.useCategories({ limit: 100, searchTerm: search || undefined });
+  // Skeleton rows until this search has data; cached data refreshes silently
+  const skeleton = categories.isLoading;
   const update = AdminHooks.useUpdateCategory();
   const remove = AdminHooks.useDeleteCategory();
   const reorder = AdminHooks.useReorderCategories();
@@ -151,7 +154,24 @@ export default function CategoryManager() {
         className="!mb-4 !w-full sm:!w-72"
         onChange={(event) => setSearch(event.target.value)}
       />
-      <Table rowKey="_id" columns={columns} dataSource={rows} loading={categories.isFetching} pagination={false} scroll={{ x: 640 }} />
+      <Table
+        rowKey="_id"
+        columns={
+          skeleton
+            ? skeletonColumns(columns, {
+                name: SkeletonCell.lines("55%", "40%"),
+                projects: SkeletonCell.line("5rem"),
+                status: SkeletonCell.labelledToggle(),
+                showOnHome: SkeletonCell.tag(),
+                actions: SkeletonCell.actions(3),
+              })
+            : columns
+        }
+        dataSource={skeleton ? skeletonRows<IAdminCategory>(8) : rows}
+        loading={!skeleton && categories.isFetching && categories.isFetchedAfterMount}
+        pagination={false}
+        scroll={{ x: 640 }}
+      />
 
       <CategoryEditor id={editing.id} open={editing.open} onClose={() => setEditing({ open: false })} />
       <ReorderModal

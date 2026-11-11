@@ -3,6 +3,7 @@ import { LuArrowDown, LuArrowRight } from "react-icons/lu";
 import ButtonLink from "@/components/ui/ButtonLink";
 import Container from "@/components/ui/Container";
 import type { IHomeData, IProjectCard } from "@/features/Public/interface/public.interface";
+import { HERO_OVERLAP } from "./heroLayout";
 import HeroShowcase from "./HeroShowcase";
 
 /**
@@ -61,9 +62,6 @@ function AnimatedHeadline({ text, highlight }: { text: string; highlight?: strin
     </h1>
   );
 }
-
-// The stage overlaps the next section; SelectedWork adds matching padding.
-export const HERO_OVERLAP = "clamp(5rem, 15vw, 15rem)";
 
 export default function Hero({
   hero,

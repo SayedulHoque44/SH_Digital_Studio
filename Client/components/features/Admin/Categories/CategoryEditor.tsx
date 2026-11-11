@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, Button, Drawer, Form, Input, Segmented, Select, Skeleton, Switch, Tabs } from "antd";
+import { Alert, Button, Drawer, Form, Input, Segmented, Select, Switch, Tabs } from "antd";
 import { useEffect } from "react";
 import { LuCopy, LuSave } from "react-icons/lu";
 import AdminHooks from "@/features/Admin/hooks/admin.hooks";
@@ -9,6 +9,7 @@ import { successToast } from "@/utils/toast";
 import BlockEditor from "../fields/BlockEditor";
 import { CtaFields, FaqListField, IconSelect, MarkdownField, OrderedSelect, SeoFields, SlugInput, StringListField } from "../fields/FormFields";
 import { MediaField } from "../fields/MediaField";
+import { DrawerFormSkeleton } from "../Skeletons";
 import { useUnsavedChanges } from "../UnsavedChanges";
 
 const toForm = (category?: IAdminCategory) =>
@@ -102,14 +103,21 @@ export default function CategoryEditor({ id, open, onClose }: { id?: string; ope
       size={760}
       destroyOnHidden
       extra={
-        <Button type="primary" icon={<LuSave aria-hidden />} loading={create.isLoading || update.isLoading} onClick={() => form.submit()}>
+        // Disabled until loaded: saving an empty form would clear the parent and images
+        <Button
+          type="primary"
+          icon={<LuSave aria-hidden />}
+          loading={create.isLoading || update.isLoading}
+          disabled={!isNew && category.isLoading}
+          onClick={() => form.submit()}
+        >
           Save
         </Button>
       }
     >
       <Form form={form} layout="vertical" requiredMark="optional" onFinish={onFinish} onValuesChange={() => setDirty(true)} scrollToFirstError>
         {!isNew && category.isLoading ? (
-          <Skeleton active />
+          <DrawerFormSkeleton />
         ) : (
           <Tabs
             items={[

@@ -5,6 +5,7 @@ import type { CSSProperties } from "react";
 import { LuSearch } from "react-icons/lu";
 import AutoSubmit from "@/components/features/Projects/AutoSubmit";
 import ProjectCard from "@/components/features/Projects/ProjectCard";
+import WorkResults from "@/components/features/Projects/WorkResults";
 import EmptyState from "@/components/shared/EmptyState";
 import ButtonLink from "@/components/ui/ButtonLink";
 import Container from "@/components/ui/Container";
@@ -14,6 +15,7 @@ import type { IProjectCard, TProjectType } from "@/features/Public/interface/pub
 import { PROJECT_TYPE_PLURALS } from "@/lib/format";
 import { buildMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
+import { readWorkFilters } from "@/lib/workFilters";
 
 const PAGE_SIZE = 24;
 const SORTS = [
@@ -55,11 +57,10 @@ const buildHref = (params: Record<string, string>) => {
  */
 export default async function WorkPage({ searchParams }: { searchParams: TSearchParams }) {
   const params = await searchParams;
-  const type = first(params.type);
-  const category = first(params.category);
-  const query = first(params.q).trim();
-  const sort = first(params.sort) || "order";
-  const page = Math.max(1, Number(first(params.page)) || 1);
+  // Shared with the results skeleton (WorkResults), which reads the same
+  // filters from the URL a visitor is navigating to
+  const filters = readWorkFilters((name) => first(params[name]));
+  const { type, category, query, sort, page } = filters;
 
   const [all, categories] = await Promise.all([getProjects("limit=100&sort=order"), getCategories()]);
   const projects = all?.result || [];
@@ -208,38 +209,44 @@ export default async function WorkPage({ searchParams }: { searchParams: TSearch
             )}
           </div>
 
-          {visible.length ? (
-            <ul className="grid gap-x-8 gap-y-14 md:grid-cols-2 xl:grid-cols-3">
-              {visible.map((project, index) => (
-                <li key={project.id} data-reveal style={{ "--reveal-delay": (index % 3) * 90 } as CSSProperties}>
-                  <ProjectCard project={project} size="sm" priority={index < 3} />
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <EmptyState
-              title="No projects match those filters"
-              description="Try a different search or industry — or tell us what you have in mind and we'll show you relevant work."
-              action={
-                <>
-                  <ButtonLink href="/work" variant="primary">
-                    Show all work
+          {/* Shows card skeletons while a filter, search or "Show more" request loads */}
+          <WorkResults
+            filters={filters}
+            more={
+              filtered.length > visible.length ? (
+                <div className="mt-14 flex justify-center">
+                  <ButtonLink href={buildHref({ ...baseParams, page: String(page + 1) })} variant="outline" size="lg">
+                    Show more projects
                   </ButtonLink>
-                  <ButtonLink href="/contact" variant="outline">
-                    Start a project
-                  </ButtonLink>
-                </>
-              }
-            />
-          )}
-
-          {filtered.length > visible.length && (
-            <div className="mt-14 flex justify-center">
-              <ButtonLink href={buildHref({ ...baseParams, page: String(page + 1) })} variant="outline" size="lg">
-                Show more projects
-              </ButtonLink>
-            </div>
-          )}
+                </div>
+              ) : null
+            }
+          >
+            {visible.length ? (
+              <ul className="grid gap-x-8 gap-y-14 md:grid-cols-2 xl:grid-cols-3">
+                {visible.map((project, index) => (
+                  <li key={project.id} data-reveal style={{ "--reveal-delay": (index % 3) * 90 } as CSSProperties}>
+                    <ProjectCard project={project} size="sm" priority={index < 3} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <EmptyState
+                title="No projects match those filters"
+                description="Try a different search or industry — or tell us what you have in mind and we'll show you relevant work."
+                action={
+                  <>
+                    <ButtonLink href="/work" variant="primary">
+                      Show all work
+                    </ButtonLink>
+                    <ButtonLink href="/contact" variant="outline">
+                      Start a project
+                    </ButtonLink>
+                  </>
+                }
+              />
+            )}
+          </WorkResults>
         </Container>
       </section>
     </>

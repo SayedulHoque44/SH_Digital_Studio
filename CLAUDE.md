@@ -52,7 +52,7 @@ The docs are the source of truth. If code and docs disagree, stop and report it 
 | Task | Command |
 | --- | --- |
 | API dev (port 3001) | `cd Server && npm run dev` |
-| Site dev (port 3000) | `cd Client && pnpm dev` |
+| Site dev (port 3000, pinned; fails if busy) | `cd Client && pnpm dev` |
 | Types | `cd Client && pnpm exec tsc --noEmit` · `cd Server && npm run typecheck` |
 | Lint | `cd Client && pnpm exec eslint .` · `cd Server && npm run lint` |
 | API tests | `cd Server && npm run test:api` |

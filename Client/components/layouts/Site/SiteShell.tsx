@@ -1,5 +1,6 @@
 import React from "react";
 import { getSettings } from "@/features/Public/apis/public.api";
+import NavigationSkeleton from "./NavigationSkeleton";
 import SiteFooter from "./SiteFooter";
 import SiteHeader from "./SiteHeader";
 
@@ -41,6 +42,8 @@ export default async function SiteShell({ children }: { children: React.ReactNod
       <main id="main-content" className="flex-1">
         {children}
       </main>
+      {/* Skeleton of the next page while a client-side navigation loads */}
+      <NavigationSkeleton />
       <SiteFooter settings={settings} />
     </div>
   );

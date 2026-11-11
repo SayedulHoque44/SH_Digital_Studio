@@ -9,6 +9,7 @@ import Icon from "@/components/shared/Icon";
 import AdminHooks from "@/features/Admin/hooks/admin.hooks";
 import type { IAdminService } from "@/features/Admin/interface/admin.interface";
 import PageHeader from "../PageHeader";
+import { SkeletonCell, skeletonColumns, skeletonRows } from "../Skeletons";
 import ReorderModal from "../ReorderModal";
 
 export default function ServicesTable() {
@@ -96,7 +97,23 @@ export default function ServicesTable() {
           </>
         }
       />
-      <Table rowKey="_id" columns={columns} dataSource={rows} loading={services.isFetching} pagination={false} scroll={{ x: 600 }} />
+      <Table
+        rowKey="_id"
+        columns={
+          services.isLoading
+            ? skeletonColumns(columns, {
+                title: SkeletonCell.icon(),
+                price: SkeletonCell.line("7rem"),
+                status: SkeletonCell.labelledToggle(),
+                actions: SkeletonCell.actions(3),
+              })
+            : columns
+        }
+        dataSource={services.isLoading ? skeletonRows<IAdminService>(6) : rows}
+        loading={!services.isLoading && services.isFetching && services.isFetchedAfterMount}
+        pagination={false}
+        scroll={{ x: 600 }}
+      />
       <ReorderModal
         open={reorderOpen}
         title="Service order"

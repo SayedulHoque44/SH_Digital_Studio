@@ -12,7 +12,6 @@ import {
   Result,
   Segmented,
   Select,
-  Skeleton,
   Switch,
   Tabs,
   Tag,
@@ -35,6 +34,7 @@ import {
 } from "../fields/FormFields";
 import { MediaField, MediaListField } from "../fields/MediaField";
 import PageHeader from "../PageHeader";
+import { EditorSkeleton } from "../Skeletons";
 import { useUnsavedChanges } from "../UnsavedChanges";
 import { CASE_STUDY_FIELDS, formToProjectPayload, projectToForm } from "./projectForm";
 
@@ -107,7 +107,16 @@ export default function ProjectEditor({ id }: { id?: string }) {
       scrollToFirstError
     >
       {loading ? (
-        <Skeleton active paragraph={{ rows: 14 }} />
+        <EditorSkeleton
+          label="Loading project…"
+          tabs={7}
+          sidebar
+          eyebrow={
+            <button type="button" onClick={() => navigate("/admin/projects")} className="inline-flex items-center gap-1.5 hover:underline">
+              <LuArrowLeft aria-hidden /> Projects
+            </button>
+          }
+        />
       ) : missing ? (
         <Result status="404" title="Project not found" extra={<Link href="/admin/projects">Back to projects</Link>} />
       ) : (

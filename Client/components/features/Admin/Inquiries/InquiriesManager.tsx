@@ -17,6 +17,7 @@ import {
 import { cn } from "@/lib/utils";
 import { successToast } from "@/utils/toast";
 import PageHeader from "../PageHeader";
+import { SkeletonCell, skeletonColumns, skeletonRows } from "../Skeletons";
 
 const STATUS_COLOR: Record<TInquiryStatus, string> = {
   new: "green",
@@ -141,6 +142,8 @@ export default function InquiriesManager() {
   const [openId, setOpenId] = useState<string | null>(searchParams.get("open"));
   const inquiries = InquiryHooks.useGetInquiries(query);
   const data = inquiries.data?.data;
+  // Skeleton rows until this page/filter has data; cached data refreshes silently
+  const skeleton = inquiries.isLoading || inquiries.isPreviousData;
 
   const open = useMemo(() => data?.result.find((item) => item._id === openId) || null, [data, openId]);
   const setFilter = (patch: Partial<IInquiryQuery>) => setQuery((current) => ({ ...current, ...patch, page: 1 }));
@@ -237,10 +240,20 @@ export default function InquiriesManager() {
 
       <Table
         rowKey="_id"
-        columns={columns}
-        dataSource={data?.result || []}
-        loading={inquiries.isFetching}
-        onRow={(record) => ({ onClick: () => setOpenId(record._id), className: "cursor-pointer" })}
+        columns={
+          skeleton
+            ? skeletonColumns(columns, {
+                contact: SkeletonCell.lines("60%", "75%"),
+                interest: SkeletonCell.lines("50%", "65%"),
+                budgetRange: SkeletonCell.line("5rem"),
+                status: SkeletonCell.tag(),
+                createdAt: SkeletonCell.line("4.5rem"),
+              })
+            : columns
+        }
+        dataSource={skeleton ? skeletonRows<IInquiry>(8) : data?.result || []}
+        loading={!skeleton && inquiries.isFetching && inquiries.isFetchedAfterMount}
+        onRow={skeleton ? undefined : (record) => ({ onClick: () => setOpenId(record._id), className: "cursor-pointer" })}
         locale={{ emptyText: "No inquiries yet — they will appear here when visitors use the contact form." }}
         scroll={{ x: 640 }}
         pagination={{

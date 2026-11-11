@@ -1,14 +1,16 @@
 "use client";
 
-import { Alert, Button, Card, Form, Input, Skeleton, Switch, Tabs, Tag } from "antd";
+import { Alert, Button, Card, Form, Input, Switch, Tabs, Tag } from "antd";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { LuExternalLink, LuPlus, LuSave, LuTrash2 } from "react-icons/lu";
+import { SkeletonStatus } from "@/components/ui/Skeleton";
 import AdminHooks from "@/features/Admin/hooks/admin.hooks";
 import { contrastTextFor, normalizeAccent } from "@/lib/color";
 import { cn } from "@/lib/utils";
 import { FeatureListField, MarkdownField, OrderedSelect, StringListField } from "../fields/FormFields";
 import PageHeader from "../PageHeader";
+import { TabsCardSkeleton } from "../Skeletons";
 import { useUnsavedChanges } from "../UnsavedChanges";
 import ContactSocialForm from "./ContactSocialForm";
 import ConfirmDelete from "../fields/ConfirmDelete";
@@ -127,7 +129,27 @@ export default function SettingsEditor() {
     setDirty(false);
   };
 
-  if (settings.isLoading) return <Skeleton active paragraph={{ rows: 14 }} />;
+  if (settings.isLoading)
+    return (
+      <>
+        <SkeletonStatus label="Loading site settings…" />
+        <PageHeader
+          title="Site settings"
+          description="Branding, homepage content, navigation, SEO defaults, legal pages and inquiry options."
+          actions={
+            <>
+              <Button icon={<LuExternalLink aria-hidden />} href="/" target="_blank">
+                View website
+              </Button>
+              <Button type="primary" disabled icon={<LuSave aria-hidden />}>
+                Save settings
+              </Button>
+            </>
+          }
+        />
+        <TabsCardSkeleton tabs={9} />
+      </>
+    );
 
   return (
     // component={false} keeps the Contact & social <form> from being nested

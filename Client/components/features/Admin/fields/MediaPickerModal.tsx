@@ -9,6 +9,7 @@ import type { IMediaAsset, IMediaRef } from "@/features/Admin/interface/admin.in
 import { apiErrorMessage } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { errorToast, successToast } from "@/utils/toast";
+import { MediaGridSkeleton } from "../Skeletons";
 import { formatBytes, readImageSize } from "./mediaUtils";
 
 export const toMediaRef = (asset: IMediaAsset): IMediaRef => ({
@@ -153,10 +154,8 @@ export default function MediaPickerModal({
                   }}
                   className="!mb-4"
                 />
-                {media.isLoading ? (
-                  <div className="flex justify-center py-16">
-                    <Spin />
-                  </div>
+                {media.isLoading || media.isPreviousData ? (
+                  <MediaGridSkeleton variant="picker" />
                 ) : items.length ? (
                   <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
                     {items.map((asset) => {

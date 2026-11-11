@@ -75,7 +75,13 @@ Legend: `[x]` done · `[ ]` to do · 👤 owner action
 - [ ] 4.14 Rename client package `ebp_next_client` → `sh-digital-studio-client` (cosmetic)
 - [ ] 4.15 Optional: Tailwind v4 canonical class cleanup (`!mb-5` → `mb-5!` etc.) — no behavior change
 - [x] 4.15a Fix Vercel API crash (500 FUNCTION_INVOCATION_FAILED): pin Node 22.x, `server.ts` exports app and skips `listen` on Vercel, `npm run deploy` script
-- [ ] 4.15b 👤 Redeploy the API with `cd Server && npm run deploy`; check `/api/health`
+- [x] 4.15b API redeployed and serving data; `/api/health` now connects before reporting (cold start showed false 503)
+- [x] 4.15c Client build fixed: `API_ORIGIN` was unset (fell back to localhost:3001); added `Client/.env.production` → deployed API
+- [ ] 4.15d 👤 Set `API_ORIGIN`, `NEXT_PUBLIC_SITE_URL`, `INTERNAL_API_KEY` (same as Server) in Vercel client project; redeploy Server (`npm run deploy`) for the health fix
+- [x] 4.15e Dev proxy loop fixed: `next dev` pinned to port 3000 (it moved to 3001 = API port, so `/api/*` proxied to itself); proxy returns 508 on a self-call
+- [x] 4.15f `Client/.env.development` → deployed API (owner runs no local Express)
+- [x] 4.15g Skeleton loaders everywhere: public navigation skeletons (all 11 page types, slug routes included, no `loading.tsx`), `/work` results skeleton, admin shell/dashboard/tables/media/clients/editors/login; removed `work/loading.tsx` (it hid `/work` content without JS); Save disabled while Profile/Category data loads (saving an empty form could clear data); page scroll locked while the navigation skeleton is shown
+- [ ] 4.15h 👤 Decide: `cn()` (tailwind-merge) drops `text-eyebrow`/`text-lead` when combined with a colour class — every `Eyebrow` and `PageHero` intro renders as plain 16px text instead of the spec. Fix = `extendTailwindMerge` font-size group in `lib/utils.ts` (visible change sitewide)
 
 ### 4C. Launch (owner)
 - [ ] 4.16 👤 Rotate MongoDB password, JWT secret and both AWS key pairs (old `.gitignore` did not exclude `.env`)
@@ -95,3 +101,7 @@ Legend: `[x]` done · `[ ]` to do · 👤 owner action
 - 2026-10-30 — Client tracker (Clients) added; PRD A10 + Non-Goals 3/9 clarified; admin-only alerts (no e-mail, per owner). Monthly budget ledger + money stats; API tests 37/37.
 - 2026-10-31 — Client project Settings tab, mute alerts, type-to-confirm delete. Collapsible accounts, encrypted Env tab, Yes/No on every delete; API tests 38/38.
 - 2026-11-11 — Vercel API crash fixed (Node 22.x pin; serverless-safe `server.ts`; `npm run deploy`).
+- 2026-11-11 — Client build fixed (`API_ORIGIN` via `.env.production`); health check connects on cold start.
+- 2026-11-11 — `/api/*` proxy self-loop guard (508) + `pnpm dev` pinned to port 3000.
+- 2026-11-11 — Dev mode uses the deployed API via `Client/.env.development`.
+- 2026-11-12 — Skeleton loaders across public site + admin; `/work` no-JS fix; Profile/Category save-while-loading fix.
