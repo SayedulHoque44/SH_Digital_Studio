@@ -47,7 +47,7 @@
 
 ```
 Browser ──► Next.js (Client, :3000)
-              ├─ Server Components ──fetch (tag "content", 300 s ISR)──► Express API (:3001) ──► MongoDB Atlas
+              ├─ Server Components ──fetch (tag "content", 300 s ISR)──► Express API (:8080) ──► MongoDB Atlas
               ├─ /api/[...path]  same-origin proxy (allow-list: public/*, admin/*) ──► Express API
               ├─ /preview, /preview/exit (Draft Mode)   /revalidate (revalidateTag)
               └─ /og/* image routes (next/og + sharp)
@@ -130,7 +130,7 @@ Module pattern (mandatory for new server features): `*.model.ts` → `*.interfac
 
 ## 6. Environment variables
 
-Client (`.env.local`): `NEXT_PUBLIC_SITE_URL`, `API_ORIGIN` (server-only), `INTERNAL_API_KEY` (server-only), `NEXT_PUBLIC_IMAGE_HOSTS`, `NEXT_PUBLIC_SENTRY_DSN`. `pnpm build` prerenders from the API, so `API_ORIGIN` must reach a running API at build time (local `.env.production` and `.env.development` → deployed API, so `pnpm dev` needs no local Express and edits the LIVE data; set it in the Vercel client project too).
+Client (`.env`, gitignored): `NEXT_PUBLIC_SITE_URL`, `API_ORIGIN` (server-only), `INTERNAL_API_KEY` (server-only), `NEXT_PUBLIC_IMAGE_HOSTS`, `NEXT_PUBLIC_SENTRY_DSN`. `pnpm build` prerenders from the API, so `API_ORIGIN` must reach a running API at build time (local `Client/.env` → deployed API, so `pnpm dev` needs no local Express and edits the LIVE data; set it in the Vercel client project too). `pnpm dev` is plain `next dev` (port 3000; not pinned).
 Server (`.env`): `mongoDbUrl`, `JWT_ACCESS_SECRET` (legacy `JWT_ACCESS_SECRCT` accepted), `CLIENT_ORIGINS`, `INTERNAL_API_KEY`, `PORT`, `NODE_ENV`, `ADMIN_SESSION_EXPIRES_IN`, `TRUST_PROXY`, `COOKIE_SECURE`, `MONGODB_DB_NAME`, `DATA_ENCRYPTION_KEY` (encrypts client env values; back it up), S3 vars, SMTP vars, `ADMIN_*` (seed only).
 Templates: `Client/.env.example`, `Server/.env.example` (placeholders only).
 

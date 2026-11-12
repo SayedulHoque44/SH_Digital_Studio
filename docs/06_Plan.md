@@ -80,7 +80,14 @@ Legend: `[x]` done · `[ ]` to do · 👤 owner action
 - [ ] 4.15d 👤 Set `API_ORIGIN`, `NEXT_PUBLIC_SITE_URL`, `INTERNAL_API_KEY` (same as Server) in Vercel client project; redeploy Server (`npm run deploy`) for the health fix
 - [x] 4.15e Dev proxy loop fixed: `next dev` pinned to port 3000 (it moved to 3001 = API port, so `/api/*` proxied to itself); proxy returns 508 on a self-call
 - [x] 4.15f `Client/.env.development` → deployed API (owner runs no local Express)
+- [x] 4.15l Dev port pin removed: `pnpm dev` = plain `next dev` (default 3000; if busy Next picks 3001 = API port and the proxy answers 508 — free port 3000). Client env now lives in `Client/.env` (no `.env.development`/`.env.production` in the repo)
 - [x] 4.15g Skeleton loaders everywhere: public navigation skeletons (all 11 page types, slug routes included, no `loading.tsx`), `/work` results skeleton, admin shell/dashboard/tables/media/clients/editors/login; removed `work/loading.tsx` (it hid `/work` content without JS); Save disabled while Profile/Category data loads (saving an empty form could clear data); page scroll locked while the navigation skeleton is shown
+- [x] 4.15i Animated `/work` search placeholder: "Search by" + cycling name / feature / technology (CSS only, static sentence for reduced motion, hidden once typing)
+- [x] 4.15j Responsive audit (headless Chrome, 320/360/390/430/768/1024 px, all public pages + admin login): only break was the project Screens device tabs overflowing at ≤360 px — fixed (compact tabs, icons hidden below `sm`)
+- [x] 4.15n Admin Clients mobile fixes (owner screenshot): "Needs attention" rows — pill + due date left, Record payment right, no squeezed date column (also on dashboard); client cards — long renewal titles wrap to 2 lines, tighter padding on phones
+- [x] 4.15o Copyable client statements: plain-text "Payment details (to send)" under each renewal's payment history and "Month details (to send)" in each budget month, with Copy (`lib/statements.ts`, `StatementBox`); foreign amounts show the taka math (`$40 × 126 = ৳5,040`)
+- [ ] 4.15k Admin panel responsive check at 390 px (needs a signed-in session) — part of 4.8 (Clients list fixed in 4.15n; rest unchecked)
+- [x] 4.15m API dev port 3001 → 8080 (owner): server `PORT` default, client `API_ORIGIN` default, example envs, READMEs, CLAUDE.md, TRD. Removes the 3000-busy → 3001 clash with the API
 - [ ] 4.15h 👤 Decide: `cn()` (tailwind-merge) drops `text-eyebrow`/`text-lead` when combined with a colour class — every `Eyebrow` and `PageHero` intro renders as plain 16px text instead of the spec. Fix = `extendTailwindMerge` font-size group in `lib/utils.ts` (visible change sitewide)
 
 ### 4C. Launch (owner)
@@ -105,3 +112,10 @@ Legend: `[x]` done · `[ ]` to do · 👤 owner action
 - 2026-11-11 — `/api/*` proxy self-loop guard (508) + `pnpm dev` pinned to port 3000.
 - 2026-11-11 — Dev mode uses the deployed API via `Client/.env.development`.
 - 2026-11-12 — Skeleton loaders across public site + admin; `/work` no-JS fix; Profile/Category save-while-loading fix.
+- 2026-11-12 — `/work` search bar animated placeholder (CSS keyframes `search-hint`).
+- 2026-11-12 — Responsive audit; project Screens tabs no longer overflow at 320–360 px.
+- 2026-11-12 — `pnpm dev` port pin removed (owner); CLAUDE.md, TRD and plan updated.
+- 2026-11-12 — API dev port moved to 8080; defaults and docs updated.
+- 2026-11-12 — Admin Clients page mobile layout fixes (Needs attention rows, client card renewal rows).
+- 2026-11-12 — Copyable payment / monthly budget statements in the client project editor.
+- 2026-11-12 — Statements show BDT math (`$20 × 126 = ৳2,520`) on plan, payments, totals, funds and costs (incl. month total costs breakdown).

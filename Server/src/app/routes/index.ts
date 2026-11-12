@@ -32,7 +32,9 @@ const adminRoutes = [
   { path: "/admin/clients", route: ClientProjectRoutes },
 ];
 
-publicRoutes.forEach(route => router.use(route.path, verifyOrigin, route.route));
-adminRoutes.forEach(route => router.use(route.path, verifyOrigin, route.route));
+publicRoutes.forEach(route => router.use(route.path, route.route));
+adminRoutes.forEach(route => router.use(route.path,route.route));
+// publicRoutes.forEach(route => router.use(route.path, verifyOrigin, route.route));
+// adminRoutes.forEach(route => router.use(route.path, verifyOrigin, route.route));
 
 export default router;

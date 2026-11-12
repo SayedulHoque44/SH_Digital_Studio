@@ -16,7 +16,7 @@ const list = (value?: string) =>
 export default {
   node_env,
   isProduction,
-  port: process.env.PORT || 3001,
+  port: process.env.PORT || 8080,
 
   // The database name is part of the URI path (.../agency_portfolio?...).
   // MONGODB_DB_NAME is an optional override (used by the API test suite so

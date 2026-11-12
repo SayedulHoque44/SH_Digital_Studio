@@ -48,6 +48,8 @@ import { DirectionTag, PriceLine, RemindField, STATE_ACCENT, StatePill, usePayme
 import ConfirmDelete from "../fields/ConfirmDelete";
 import AccountsField from "./AccountsField";
 import { EnvField } from "./EnvField";
+import StatementBox from "./StatementBox";
+import { renewalStatement } from "@/lib/statements";
 
 /* ------------------------------------------------------------------ */
 /* Form <-> API conversion (dates are "YYYY-MM-DD" in the form)        */
@@ -142,6 +144,7 @@ function RenewalOverview({ project, onPay }: { project: IClientProject; onPay: (
 /* ------------------------------------------------------------------ */
 function RenewalCard({ form, name, onRemove }: { form: FormInstance; name: number; onRemove: () => void }) {
   const renewal = (Form.useWatch(["renewals", name], form) || {}) as IRenewal;
+  const projectName = Form.useWatch("name", form) as string | undefined;
   const { state, daysLeft } = renewalState({ ...renewal, paidUntil: renewal.paidUntil || null });
   const currency = renewal.currency || "USD";
 
@@ -254,6 +257,7 @@ function RenewalCard({ form, name, onRemove }: { form: FormInstance; name: numbe
                 </div>
               ))}
             {payments.length > 0 && <p className="mt-1 text-[11px] text-stone-500">Columns: paid on · amount · period from · period to · note</p>}
+            {payments.length > 0 && <StatementBox title="Payment details (to send)" text={renewalStatement(renewal, projectName)} />}
           </div>
         )}
       </Form.List>

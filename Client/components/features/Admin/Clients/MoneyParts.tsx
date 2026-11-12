@@ -17,6 +17,8 @@ import {
 import { CURRENCY_OPTIONS, formatMoney } from "@/lib/renewals";
 import { cn } from "@/lib/utils";
 import ConfirmDelete from "../fields/ConfirmDelete";
+import { monthStatement } from "@/lib/statements";
+import StatementBox from "./StatementBox";
 
 /* ------------------------------------------------------------------ */
 /* Stat tiles                                                          */
@@ -153,6 +155,12 @@ function MonthTotalsBox({ form, name }: { form: FormInstance; name: number }) {
   );
 }
 
+function MonthStatement({ form, name }: { form: FormInstance; name: number }) {
+  const month = (Form.useWatch(["ledger", name], form) || {}) as ILedgerMonth;
+  const projectName = Form.useWatch("name", form) as string | undefined;
+  return <StatementBox title="Month details (to send)" text={monthStatement(month, projectName)} />;
+}
+
 const withoutIds = <T extends { _id?: string }>(items: T[] = []) => items.map(({ _id: _omit, ...rest }) => rest);
 
 export function LedgerField({ form }: { form: FormInstance }) {
@@ -281,6 +289,7 @@ export function LedgerField({ form }: { form: FormInstance }) {
                       </Form.List>
 
                       <MonthTotalsBox form={form} name={field.name} />
+                      <MonthStatement form={form} name={field.name} />
 
                       <Form.Item name={[field.name, "notes"]} label="Notes" className="mb-2!">
                         <Input.TextArea autoSize={{ minRows: 1, maxRows: 4 }} maxLength={2000} />

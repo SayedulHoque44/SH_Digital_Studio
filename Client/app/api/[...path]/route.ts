@@ -40,7 +40,7 @@ const RESPONSE_HEADERS = [
 ];
 
 // Marks requests this proxy sends. If one comes back in, API_ORIGIN points at
-// this Next.js server (e.g. `next dev` moved to port 3001 when 3000 was busy)
+// this Next.js server (e.g. API_ORIGIN set to the website's own port)
 // and forwarding again would loop until every request times out.
 const PROXY_MARKER = "x-shds-proxied";
 

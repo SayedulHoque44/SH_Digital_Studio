@@ -265,7 +265,7 @@ export function AttentionList({
                 {alert.projectName}
               </Link>
               <p className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-stone-600">
-                <span>
+                <span className="min-w-0 wrap-anywhere">
                   {alert.title} · {RENEWAL_KIND_LABELS[alert.kind]}
                 </span>
                 <DirectionTag direction={alert.direction} />
@@ -274,11 +274,12 @@ export function AttentionList({
                 <PriceLine renewal={alert} />
               </p>
             </div>
-            <div className="flex shrink-0 items-center gap-3 sm:flex-col sm:items-end sm:gap-1.5">
+            {/* Phone: pill + date on the left, button on the right (wraps under them if needed) */}
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-paper-200 pt-2.5 sm:shrink-0 sm:flex-col sm:items-end sm:gap-1.5 sm:border-0 sm:pt-0">
               <StatePill state={alert.state} daysLeft={alert.daysLeft} />
-              <span className="text-xs text-stone-600">Due {formatDay(alert.paidUntil)}</span>
+              <span className="whitespace-nowrap text-xs text-stone-600">Due {formatDay(alert.paidUntil)}</span>
               {onRecordPayment && (
-                <Button size="small" onClick={() => onRecordPayment(alert)}>
+                <Button size="small" className="ml-auto sm:ml-0" onClick={() => onRecordPayment(alert)}>
                   Record payment
                 </Button>
               )}

@@ -32,7 +32,7 @@ HARD RULES:
 - Ask before destructive actions.
 
 COMMANDS:
-API dev: cd Server && npm run dev (port 3001) | Site dev: cd Client && pnpm dev (port 3000)
+API dev: cd Server && npm run dev (port 8080) | Site dev: cd Client && pnpm dev (port 3000)
 Types: cd Client && pnpm exec tsc --noEmit ; cd Server && npm run typecheck
 Lint: cd Client && pnpm exec eslint . ; cd Server && npm run lint
 API tests: cd Server && npm run test:api | Build: cd Client && pnpm build

@@ -21,7 +21,7 @@ in HttpOnly cookies, bcrypt, Helmet, Nodemailer (optional), AWS S3 (optional).
 cd Server
 npm install
 cp .env.example .env        # skip if you already have a .env - see below
-npm run dev                 # http://localhost:3001  (health: /api/health)
+npm run dev                 # http://localhost:8080  (health: /api/health)
 npm run seed                # first time only: demo content (idempotent)
 ADMIN_EMAIL=you@your-domain.com ADMIN_NAME="Your Name" \
 ADMIN_PASSWORD='a-long-passphrase-2024' npm run seed:admin
@@ -60,7 +60,7 @@ Copy `.env.example` → `.env`. **`.env` is git-ignored; never commit it.**
 | `JWT_ACCESS_SECRET` | yes | Signs admin sessions. 64+ random characters. (The legacy spelling `JWT_ACCESS_SECRCT` is still read.) |
 | `CLIENT_ORIGINS` | production | Comma-separated website origins allowed to call the API (CORS + CSRF origin check). Default `http://localhost:3000` |
 | `INTERNAL_API_KEY` | production | Shared secret with the Next.js server (same value as the client's `INTERNAL_API_KEY`). Lets server renders skip per-IP rate limits and forwards real visitor IPs |
-| `PORT` | no | Default `3001` |
+| `PORT` | no | Default `8080` |
 | `NODE_ENV` | no | `production` enables secure cookies and trusts one proxy hop |
 | `ADMIN_SESSION_EXPIRES_IN` | no | Session length, default `8h` |
 | `TRUST_PROXY` | no | Proxy hops in front of the API (Vercel: `1`) |

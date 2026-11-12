@@ -81,7 +81,7 @@ function ProjectCard({ project }: { project: IClientProject }) {
     <Link
       href={`/admin/clients/${project._id}`}
       className={cn(
-        "group flex h-full flex-col rounded-2xl border-l-4 bg-paper-50 p-5 ring-1 ring-paper-300/70 transition-shadow hover:shadow-md",
+        "group flex h-full flex-col rounded-2xl border-l-4 bg-paper-50 p-4 ring-1 sm:p-5 ring-paper-300/70 transition-shadow hover:shadow-md",
         project.status === "ended" ? "border-l-paper-300 opacity-75" : STATE_ACCENT[urgency.state],
       )}
     >
@@ -108,16 +108,17 @@ function ProjectCard({ project }: { project: IClientProject }) {
           project.renewals.map((renewal) => {
             const { state, daysLeft } = renewalState(renewal);
             return (
-              <li key={renewal._id} className="flex items-center justify-between gap-3 text-sm">
+              <li key={renewal._id} className="flex items-start justify-between gap-3 text-sm">
                 <span className="min-w-0">
-                  <span className="block truncate text-ink-900">{renewal.title}</span>
+                  {/* Long titles (domains, URLs) wrap to 2 lines instead of being cut off on phones */}
+                  <span className="line-clamp-2 text-ink-900 wrap-anywhere">{renewal.title}</span>
                   <span className="block text-xs text-stone-600">
                     {[formatMoney(renewal.amount, renewal.currency), renewal.paidUntil && `until ${formatDay(renewal.paidUntil)}`]
                       .filter(Boolean)
                       .join(" · ") || "—"}
                   </span>
                 </span>
-                <StatePill state={state} daysLeft={daysLeft} />
+                <StatePill state={state} daysLeft={daysLeft} className="mt-0.5 shrink-0" />
               </li>
             );
           })
@@ -227,6 +228,7 @@ export default function ClientsManager() {
 
           <Card
             className="mt-6!"
+            classNames={{ body: "p-3! sm:p-6!" }}
             title={
               <span className="flex items-center gap-2">
                 Needs attention

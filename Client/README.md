@@ -18,7 +18,7 @@ cp .env.example .env.local     # then fill in the values below
 pnpm dev                       # http://localhost:3000
 ```
 
-The API must be running too (`cd ../Server && npm run dev`, port 3001).
+The API must be running too (`cd ../Server && npm run dev`, port 8080).
 Admin: <http://localhost:3000/admin/login> — accounts are created on the
 server with `npm run seed:admin` (see `Server/README.md`).
 
@@ -39,7 +39,7 @@ server with `npm run seed:admin` (see `Server/README.md`).
 | Variable | Where | Purpose |
 | --- | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | public | Final site URL, no trailing slash (canonical URLs, sitemap, Open Graph, structured data) |
-| `API_ORIGIN` | **server only** | Origin of the Express API, e.g. `https://api.your-domain.com`. Default `http://localhost:3001` |
+| `API_ORIGIN` | **server only** | Origin of the Express API, e.g. `https://api.your-domain.com`. Default `http://localhost:8080` |
 | `INTERNAL_API_KEY` | **server only** | Same value as the API's `INTERNAL_API_KEY` |
 | `NEXT_PUBLIC_IMAGE_HOSTS` | public | Optional extra image hosts for `next/image` (comma separated) |
 | `NEXT_PUBLIC_SENTRY_DSN` | public | Optional; Sentry stays off when empty |

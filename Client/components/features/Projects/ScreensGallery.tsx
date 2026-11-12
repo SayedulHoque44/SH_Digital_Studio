@@ -69,7 +69,7 @@ export default function ScreensGallery({
   return (
     <div>
       {available.length > 1 && (
-        <div role="tablist" aria-label="Screenshot device" className="mb-8 inline-flex rounded-full bg-paper-200 p-1">
+        <div role="tablist" aria-label="Screenshot device" className="mb-8 inline-flex max-w-full rounded-full bg-paper-200 p-1">
           {available.map((device, position) => {
             const selected = device.key === active;
             return (
@@ -87,11 +87,11 @@ export default function ScreensGallery({
                 onClick={() => setActive(device.key)}
                 onKeyDown={(event) => onTabKey(event, position)}
                 className={cn(
-                  "inline-flex h-10 items-center gap-2 rounded-full px-4 text-sm font-medium transition-colors",
+                  "inline-flex h-10 min-w-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3 text-sm font-medium transition-colors sm:gap-2 sm:px-4",
                   selected ? "bg-ink-950 text-paper-50" : "text-ink-800 hover:bg-paper-300",
                 )}
               >
-                <device.Icon aria-hidden className="size-4" />
+                <device.Icon aria-hidden className="size-4 max-sm:hidden" />
                 {device.label}
                 <span className={cn("text-xs", selected ? "text-ink-300" : "text-stone-500")}>
                   {sets[device.key].length}

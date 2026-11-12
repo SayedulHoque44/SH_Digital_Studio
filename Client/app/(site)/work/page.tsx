@@ -158,8 +158,21 @@ export default async function WorkPage({ searchParams }: { searchParams: TSearch
                 name="q"
                 defaultValue={query}
                 placeholder="Search by name, feature or technology"
-                className="h-12 w-full rounded-full bg-paper-100 pl-11 pr-4 text-[0.95rem] outline-none ring-1 ring-transparent placeholder:text-stone-500 focus:ring-ink-900/40"
+                className="peer h-12 w-full rounded-full bg-paper-100 pl-11 pr-4 text-[0.95rem] outline-none ring-1 ring-transparent placeholder:text-transparent focus:ring-ink-900/40"
               />
+              {/* Visual placeholder (native one stays for assistive tech); hidden once the visitor types */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-y-0 left-11 right-4 hidden items-center overflow-hidden whitespace-nowrap text-[0.95rem] text-stone-500 peer-placeholder-shown:flex"
+              >
+                Search by&nbsp;
+                <span className="search-hint-words grid font-medium text-ink-800">
+                  <span className="search-hint-word">name</span>
+                  <span className="search-hint-word">feature</span>
+                  <span className="search-hint-word">technology</span>
+                </span>
+                <span className="search-hint-static">name, feature or technology</span>
+              </span>
             </label>
             <label className="block">
               <span className="sr-only">Industry</span>

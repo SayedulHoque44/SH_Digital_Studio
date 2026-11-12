@@ -10,7 +10,7 @@ import "server-only";
  * without a redeploy.
  */
 
-export const API_ORIGIN = (process.env.API_ORIGIN || "http://localhost:3001").replace(/\/+$/, "");
+export const API_ORIGIN = (process.env.API_ORIGIN || "http://localhost:8080").replace(/\/+$/, "");
 export const CONTENT_TAG = "content";
 export const REVALIDATE_SECONDS = 300;
 
